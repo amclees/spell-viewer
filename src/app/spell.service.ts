@@ -12,7 +12,6 @@ export class SpellService {
     this.spells = [];
     let subscription = this.http.get('/spells.json').map(response => response.json()).subscribe(
       spells => {
-        console.log(spells);
         let spellNames = Object.keys(spells).sort();
         for (var i = 0; i < spellNames.length; i++) {
           let spellObject = spells[spellNames[i]];
@@ -28,6 +27,9 @@ export class SpellService {
           ));
         }
         subscription.unsubscribe();
+      },
+      error => {
+        console.log(error);
       }
     );
 

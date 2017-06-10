@@ -1,1 +1,33 @@
-<p>Spell List<p>
+<div>
+  <input [(ngModel)]="filters.name" placeholder="Search" class="form-control" />
+  <br />
+  <div class="form-group">
+    <label for="schoolInput">School</label>
+    <select [(ngModel)]="filters.school" id="schoolInput" class="form-control">
+      <option></option>
+      <option>Abjuration</option>
+      <option>Conjuration</option>
+      <option>Divination</option>
+      <option>Enchantment</option>
+      <option>Evocation</option>
+      <option>Illusion</option>
+      <option>Necromancy</option>
+      <option>Transmutation</option>
+    </select>
+  </div>
+</div>
+<br />
+<div>
+  <table class="table table-hover">
+    <tr>
+      <th (click)="pushComparator('name')">Name</th>
+      <th (click)="pushComparator('level')">Level</th>
+      <th (click)="pushComparator('school')">School</th>
+    </tr>
+    <tr *ngFor="let spell of filter(spells)" (click)="selected = spell">
+      <td>{{spell.name}}</td>
+      <td>{{spell.level}}</td>
+      <td>{{spell.school}}</td>
+    </tr>
+  </table>
+</div>
