@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { SpellService } from './spell.service';
+
 import { AppComponent } from './app.component';
 import { ListComponent } from './list.component';
 import { ViewComponent } from './view.component';
@@ -18,7 +20,7 @@ import { ViewComponent } from './view.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [SpellService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
