@@ -19,17 +19,17 @@ export class ListComponent {
   reverse: boolean;
 
   constructor(private spellService: SpellService) {
-    this.filters = {
-      name: '',
-      school: ''
-    };
-    this.reverse = false;
     this.resetFilters();
   }
 
   resetFilters(): void {
     this.spells = this.spellService.getSpells();
     this.comparator = 'name';
+    this.reverse = false;
+    this.filters = {
+      name: '',
+      school: ''
+    };
   }
 
   sort(): void {
