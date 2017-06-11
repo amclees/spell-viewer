@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 .spell-view {
   padding: 25px;
+  overflow-y: auto;
+  height: 80%;
 }
 .whitespace {
   white-space: pre-wrap;
+  padding: 10px;
 }
 .main-container {
   margin-left: 15%;
