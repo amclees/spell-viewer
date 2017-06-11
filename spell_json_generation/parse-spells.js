@@ -20,7 +20,8 @@ The following are the states by what they are waiting for:
 3 - Range
 4 - Components
 5 - Duration
-6 - Description or new spell
+6 - Class
+7 - Description or new spell
 
 Lines consisting of \n (\n only) are replaced with a newline
 */
@@ -63,13 +64,19 @@ reader.on('line', function(line) {
         break;
       case 5:
         currentWord.duration = line.split(': ').slice(1).join(' ');
-        currentWord.description = '';
         state++;
         break;
       case 6:
+        currentWord.class = line.split(': ').slice(1).join(' ');
+        currentWord.description = '';
+        state++;
+        break;
+      case 7:
         if (line === '\\n') {
           currentWord.description += '\n';
           break;
+        } else if (currentWord.description !== '') {
+          currentWord.description += ' ';
         }
         currentWord.description += line;
         break;
