@@ -12,6 +12,7 @@ var currentWord = {};
 var currentName = '';
 var state = 0;
 var currentLineNumber = 0;
+var lastLineBreak = false;
 /**
 The parsing is done in a finite state machine.
 The following are the states by what they are waiting for:
@@ -79,12 +80,16 @@ reader.on('line', function(line) {
         break;
       case 7:
         if (line === '\\n') {
-          currentWord.description += '\n';
+          currentWord.description += '\n\n';
+          lastLineBreak = true;
           break;
         } else if (currentWord.description !== '') {
-          currentWord.description += ' ';
+          if (!lastLineBreak) {
+            currentWord.description += ' ';
+          }
         }
         currentWord.description += line;
+        lastLineBreak = false;
         break;
     }
   }
