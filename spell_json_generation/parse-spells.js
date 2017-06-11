@@ -11,6 +11,7 @@ var words = {};
 var currentWord = {};
 var currentName = '';
 var state = 0;
+var currentLineNumber = 0;
 /**
 The parsing is done in a finite state machine.
 The following are the states by what they are waiting for:
@@ -40,9 +41,14 @@ reader.on('line', function(line) {
         state++;
         break;
       case 1:
+        // TODO: Ritual support
         if (line.indexOf('cantrip') !== -1) {
           currentWord.level = 0;
           currentWord.school = line.split(' ')[0];
+        } else if (line.indexOf('level') === -1) {
+          console.log('Could not read level and school on line ' + currentLineNumber + ' from: ' + line);
+          currentWord.level = -1;
+          currentWord.school = 'None';
         } else {
           currentWord.level = line[0];
           var rawSchool = line.split(' ')[1];
@@ -51,23 +57,23 @@ reader.on('line', function(line) {
         state++;
         break;
       case 2:
-        currentWord.casting_time = line.split(': ').slice(1).join(' ');
+        currentWord.casting_time = readTagged(line, 'Casting Time', currentLineNumber);
         state++;
         break;
       case 3:
-        currentWord.range = line.split(': ').slice(1).join(' ');
+        currentWord.range = readTagged(line, 'Range', currentLineNumber);
         state++;
         break;
       case 4:
-        currentWord.components = line.split(': ').slice(1).join(' ');
+        currentWord.components = readTagged(line, 'Components', currentLineNumber);
         state++;
         break;
       case 5:
-        currentWord.duration = line.split(': ').slice(1).join(' ');
+        currentWord.duration = readTagged(line, 'Duration', currentLineNumber);
         state++;
         break;
       case 6:
-        currentWord.class = line.split(': ').slice(1).join(' ').split(', ');
+        currentWord.class = readTagged(line, 'Class', currentLineNumber).split(', ');
         currentWord.description = '';
         state++;
         break;
@@ -82,6 +88,7 @@ reader.on('line', function(line) {
         break;
     }
   }
+  currentLineNumber++;
 });
 
 reader.on('close', function() {
@@ -89,3 +96,15 @@ reader.on('close', function() {
     console.log('Wrote generated JSON to spells.json.');
   });
 });
+
+function readTagged(line, tag, lineNumber) {
+  if (lineNumber === undefined) {
+    lineNumber = -1;
+  }
+  var parts = line.split(': ');
+  if (parts.length < 2 || parts[0].toLowerCase() !== tag.toLowerCase()) {
+    console.log('Could not read tag ' + tag + ' on line ' + lineNumber + ' from: ' + line);
+    return '';
+  }
+  return parts.slice(1).join(': ');
+}
