@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  font-family: Lato;
+}
 .spell-view {
   padding: 25px;
   overflow-y: auto;
@@ -11,4 +14,6 @@
 .main-container {
   margin-left: 15%;
   margin-right: 10%;
+  margin-top: 2%;
+  margin-bottom: 5%;
 }
