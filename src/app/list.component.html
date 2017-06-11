@@ -24,7 +24,7 @@
       <th (click)="pushComparator('level')">Level</th>
       <th (click)="pushComparator('school')">School</th>
     </tr>
-    <tr *ngFor="let spell of filter(spells)" (click)="selected = spell">
+    <tr *ngFor="let spell of getSpellsForDisplay()" (click)="selected = spell">
       <td>{{spell.name}}</td>
       <td>{{spell.level}}</td>
       <td>{{spell.school}}</td>

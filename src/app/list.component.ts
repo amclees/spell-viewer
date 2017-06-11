@@ -14,7 +14,7 @@ export class ListComponent {
   filters: {
     name: string;
     school: string;
-  }
+  };
   comparator: string;
   reverse: boolean;
 
@@ -28,15 +28,15 @@ export class ListComponent {
     this.reverse = false;
   }
 
-  filter(spells: Spell[]): Spell[] {
-    let display = spells.filter(this.composeFilters([
+  getSpellsForDisplay(): Spell[] {
+    this.spells.sort(this.getComparator(this.comparator));
+    if (this.reverse) {
+      this.spells.reverse();
+    }
+    return this.spells.filter(this.composeFilters([
       this.getStringFilter('name', this.filters.name),
       this.getStringFilter('school', this.filters.school)
-    ])).sort(this.getComparator(this.comparator));
-    if (this.reverse) {
-      display.reverse();
-    }
-    return display;
+    ]));
   }
 
   pushComparator(property: string): void {
@@ -57,12 +57,12 @@ export class ListComponent {
       }
 
       return pass;
-    }
+    };
   }
 
   private getStringFilter(property, value): (spell: Spell) => boolean {
     if (!value || value === '') {
-      return (spell: Spell) => { return true; }
+      return (spell: Spell) => { return true; };
     }
     return (spell: Spell) => {
       if (!spell.hasOwnProperty(property)) {
@@ -70,7 +70,7 @@ export class ListComponent {
         return false;
       }
       return spell[property].toLowerCase().includes(value.toLowerCase());
-    }
+    };
   }
 
   private getComparator(property): (spell1: Spell, spell2: Spell) => number {
@@ -81,7 +81,10 @@ export class ListComponent {
         }
         return 0;
       }
+      if (spell1[property] === spell2[property]) {
+        return 0;
+      }
       return (spell1[property] < spell2[property]) ? -1 : 1;
-    }
+    };
   }
 }
