@@ -19,24 +19,28 @@ export class ListComponent {
   reverse: boolean;
 
   constructor(private spellService: SpellService) {
+    this.filters = {
+      name: '',
+      school: ''
+    };
+    this.reverse = false;
     this.resetFilters();
   }
 
   resetFilters(): void {
     this.spells = this.spellService.getSpells();
-    this.filters = {
-      name: '',
-      school: ''
-    };
     this.comparator = 'name';
-    this.reverse = false;
   }
 
-  getSpellsForDisplay(): Spell[] {
+  sort(): void {
     this.spells.sort(this.getComparator(this.comparator));
     if (this.reverse) {
       this.spells.reverse();
     }
+  }
+
+  getSpellsForDisplay(): Spell[] {
+    this.sort();
     return this.spells.filter(this.composeFilters([
       this.getStringFilter('name', this.filters.name),
       this.getStringFilter('school', this.filters.school)
