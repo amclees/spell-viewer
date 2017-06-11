@@ -28,7 +28,7 @@ The following are the states by what they are waiting for:
 Lines consisting of \n (\n only) are replaced with a newline
 */
 reader.on('line', function(line) {
-  if (line === '') {
+  if (line === '' || line === 'END') {
     words[currentName] = currentWord;
     currentWord = {};
     currentName = '';
