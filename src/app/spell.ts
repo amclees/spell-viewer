@@ -7,7 +7,8 @@ export class Spell {
     public duration: string,
     public level: number,
     public range: string,
-    public school: string
+    public school: string,
+    public classes: string[]
   ) {
     if (level < 0 || level > 9) {
       throw new Error("Invalid Spell: Level out of range");

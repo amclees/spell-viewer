@@ -13,7 +13,7 @@ export class SpellService {
     let subscription = this.http.get('/spells.json').map(response => response.json()).subscribe(
       spells => {
         let spellNames = Object.keys(spells).sort();
-        for (var i = 0; i < spellNames.length; i++) {
+        for (let i = 0; i < spellNames.length; i++) {
           let spellObject = spells[spellNames[i]];
           this.spells.push(new Spell(
             spellNames[i],
@@ -23,7 +23,8 @@ export class SpellService {
             spellObject.duration,
             spellObject.level,
             spellObject.range,
-            spellObject.school
+            spellObject.school,
+            spellObject['class']
           ));
         }
         subscription.unsubscribe();

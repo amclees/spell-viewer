@@ -1,7 +1,7 @@
 <div *ngIf="spell">
   <h2>{{spell.name}}</h2>
   <br />
-  <p><em>{{format(spell.level, spell.school)}}</em></p>
+  <p><em>{{format(spell.level, spell.school)}} - {{spell.classes.join(', ')}} spell</em></p>
   <table class="table">
     <tr>
       <td>Casting Time</td>
