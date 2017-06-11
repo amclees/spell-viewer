@@ -3,5 +3,7 @@
   <spell-list #list></spell-list>
 </div>
 <div class="col-md-6">
-  <spell-view></spell-view>
+  <div class="affix">
+    <spell-view [spell]="list.selected"></spell-view>
+  </div>
 </div>
