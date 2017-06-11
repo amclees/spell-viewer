@@ -2,3 +2,9 @@
 .spell-view {
   padding: 25px;
 }
+.whitespace {
+  white-space: pre;
+}
+.description {
+  width: 20px;
+}

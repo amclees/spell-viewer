@@ -51,7 +51,7 @@ reader.on('line', function(line) {
         state++;
         break;
       case 2:
-        currentWord['casting-time'] = line.split(': ').slice(1).join(' ');
+        currentWord.casting_time = line.split(': ').slice(1).join(' ');
         state++;
         break;
       case 3:
@@ -67,7 +67,7 @@ reader.on('line', function(line) {
         state++;
         break;
       case 6:
-        currentWord.class = line.split(': ').slice(1).join(' ');
+        currentWord.class = line.split(': ').slice(1).join(' ').split(', ');
         currentWord.description = '';
         state++;
         break;
