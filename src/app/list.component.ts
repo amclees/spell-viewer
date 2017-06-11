@@ -19,7 +19,11 @@ export class ListComponent {
   reverse: boolean;
 
   constructor(private spellService: SpellService) {
-    this.spells = spellService.getSpells();
+    this.resetFilters();
+  }
+
+  resetFilters(): void {
+    this.spells = this.spellService.getSpells();
     this.filters = {
       name: '',
       school: ''
