@@ -16,6 +16,28 @@
       <option>Transmutation</option>
     </select>
   </div>
+  <table class="table">
+    <tr>
+      <th>Bard</th>
+      <th>Cleric</th>
+      <th>Druid</th>
+      <th>Paladin</th>
+      <th>Ranger</th>
+      <th>Sorcerer</th>
+      <th>Warlock</th>
+      <th>Wizard</th>
+    </tr>
+    <tr>
+      <td><input [(ngModel)]="bard" type="checkbox" /></td>
+      <td><input [(ngModel)]="cleric" type="checkbox" /></td>
+      <td><input [(ngModel)]="druid" type="checkbox" /></td>
+      <td><input [(ngModel)]="paladin" type="checkbox" /></td>
+      <td><input [(ngModel)]="ranger" type="checkbox" /></td>
+      <td><input [(ngModel)]="sorcerer" type="checkbox" /></td>
+      <td><input [(ngModel)]="warlock" type="checkbox" /></td>
+      <td><input [(ngModel)]="wizard" type="checkbox" /></td>
+    </tr>
+  </table>
   <button (click)="resetFilters()" class="btn btn-info">Reset Filters</button>
 </div>
 <br />
@@ -25,11 +47,13 @@
       <th (click)="pushComparator('name')">Name</th>
       <th (click)="pushComparator('level')">Level</th>
       <th (click)="pushComparator('school')">School</th>
+      <th>Classes</th>
     </tr>
     <tr *ngFor="let spell of getSpellsForDisplay()" (click)="selected = spell">
       <td>{{spell.name}}</td>
       <td>{{spell.level}}</td>
       <td>{{spell.school}}</td>
+      <td>{{spell.classes.join(', ')}}</td>
     </tr>
   </table>
 </div>

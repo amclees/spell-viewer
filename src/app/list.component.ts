@@ -14,6 +14,7 @@ export class ListComponent {
   filters: {
     name: string;
     school: string;
+    class: string[];
   };
   comparator: string;
   reverse: boolean;
@@ -28,7 +29,8 @@ export class ListComponent {
     this.reverse = false;
     this.filters = {
       name: '',
-      school: ''
+      school: '',
+      class: []
     };
   }
 
@@ -41,9 +43,17 @@ export class ListComponent {
 
   getSpellsForDisplay(): Spell[] {
     this.sort();
+    this.filters.class = [];
+    let classes = ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'];
+    for (let i = 0; i < classes.length; i++) {
+      if (this[classes[i]]) {
+        this.filters.class.push(classes[i]);
+      }
+    }
     return this.spells.filter(this.composeFilters([
       this.getStringFilter('name', this.filters.name),
-      this.getStringFilter('school', this.filters.school)
+      this.getStringFilter('school', this.filters.school),
+      this.getArrayFilter('classes', this.filters.class)
     ]));
   }
 
@@ -78,6 +88,24 @@ export class ListComponent {
         return false;
       }
       return spell[property].toLowerCase().includes(value.toLowerCase());
+    };
+  }
+
+  private getArrayFilter(property, values): (spell: Spell) => boolean {
+    if (!values || values.length === 0) {
+      return (spell: Spell) => { return true; };
+    }
+    let individualFilters = values.map((value) => {
+      return (array) => {
+        return array.reduce((acc, string) => {
+          return acc || string.toLowerCase().includes(value.toLowerCase());
+        }, false);
+      };
+    });
+    return (spell: Spell) => {
+      return individualFilters.reduce((valid, filter) => {
+        return valid || filter(spell[property]);
+      }, false);
     };
   }
 
