@@ -8,7 +8,7 @@ exports = module.exports = __webpack_require__(44)(false);
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nbody {\n  font-family: Lato;\n}\n.spell-view {\n  padding: 25px;\n  overflow-y: auto;\n  height: 80%;\n}\n.whitespace {\n  white-space: pre-wrap;\n  padding: 10px;\n}\n.main-container {\n  margin-left: 10%;\n  margin-right: 10%;\n  margin-top: 2%;\n  margin-bottom: 5%;\n}\n.footer {\n  font-size: 14px;\n}\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\nbody {\r\n  font-family: Lato;\r\n}\r\n.spell-view {\r\n  padding: 25px;\r\n  overflow-y: auto;\r\n  height: 80%;\r\n}\r\n.whitespace {\r\n  white-space: pre-wrap;\r\n  padding: 10px;\r\n}\r\n.main-container {\r\n  margin-left: 10%;\r\n  margin-right: 10%;\r\n  margin-top: 2%;\r\n  margin-bottom: 5%;\r\n}\r\n.footer {\r\n  font-size: 14px;\r\n}\r\n", ""]);
 
 // exports
 
