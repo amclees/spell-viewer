@@ -18,7 +18,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/spell_json_generation/spells.txt
-/spell_json_generation/spells.json
+/spell_json_generation/*.json
+/spell_json_generation/*.txt
 /src/spells.json
 /src/*.json
