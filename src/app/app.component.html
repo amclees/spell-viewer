@@ -1,4 +1,4 @@
-<h2>D&amp;D 5e Spells</h2>
+<h2 id="title">D&amp;D 5e Spells <small><a href="#help" class="btn btn-primary">Help</a></small></h2>
 <div class="row">
   <div class="col-md-6">
     <spell-list #list></spell-list>
@@ -8,4 +8,13 @@
       <spell-view [spell]="list.selected"></spell-view>
     </div>
   </div>
+</div>
+<hr />
+<div id="help">
+  <h2>How to Use <small><a href="#title" class="btn btn-primary">Back to Top</a></small></h2>
+  <ul>
+    <li>Type in the search box to find a specific spell</li>
+    <li>Click the top of a column to sort by that column</li>
+    <li>Click on a spell to view details about it</li>
+  </ul>
 </div>
