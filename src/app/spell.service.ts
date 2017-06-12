@@ -15,17 +15,22 @@ export class SpellService {
         let spellNames = Object.keys(spells).sort();
         for (let i = 0; i < spellNames.length; i++) {
           let spellObject = spells[spellNames[i]];
-          this.spells.push(new Spell(
-            spellNames[i],
-            spellObject.casting_time,
-            this.getComponents(spellObject.components),
-            spellObject.description,
-            spellObject.duration,
-            spellObject.level,
-            spellObject.range,
-            spellObject.school,
-            spellObject['class']
-          ));
+          try {
+            this.spells.push(new Spell(
+              spellNames[i],
+              spellObject.casting_time,
+              this.getComponents(spellObject.components),
+              spellObject.description,
+              spellObject.duration,
+              spellObject.level,
+              spellObject.range,
+              spellObject.school,
+              spellObject['class']
+            ));
+          } catch (eror) {
+            console.log('Error converting to spell:')
+            console.log(spellObject);
+          }
         }
         subscription.unsubscribe();
       },

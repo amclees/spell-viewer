@@ -10,12 +10,16 @@ import { Spell } from './spell';
 export class ViewComponent {
   @Input() spell: Spell;
 
-  format(level: number, school: string): string {
-    if (level === 0) {
-      return `${school} cantrip`;
+  formatLevel(spell: Spell): string {
+    if (spell.level === undefined || spell.school === undefined) {
+      console.log('Undefined level or school in:');
+      console.log(spell);
+    }
+    if (spell.level === 0) {
+      return `${spell.school} cantrip`;
     }
     let suffix = 'th';
-    switch (level % 10) {
+    switch (spell.level % 10) {
       case 1:
         suffix = 'st';
         break;
@@ -26,6 +30,6 @@ export class ViewComponent {
         suffix = 'rd';
         break;
     }
-    return `${level}${suffix}-level ${school.toLowerCase()}`;
+    return `${spell.level}${suffix}-level ${spell.school.toLowerCase()}`;
   }
 }
