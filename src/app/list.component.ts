@@ -34,6 +34,16 @@ export class ListComponent {
       class: [],
       components: []
     };
+
+    let classes = ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'];
+    for (let i = 0; i < classes.length; i++) {
+      this[classes[i]] = false;
+    }
+
+    let componentTypes = ['verbal', 'somatic', 'material', 'gold'];
+    for (let i = 0; i < componentTypes.length; i++) {
+      this[componentTypes[i]] = false;
+    }
   }
 
   sort(): void {
