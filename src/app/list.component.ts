@@ -17,10 +17,25 @@ export class ListComponent {
     class: string[];
     components: string[];
   };
+  filterResources: {
+    classes: string[];
+    componentTypes: string[];
+    shorthandComponents: object;
+  };
   comparator: string;
   reverse: boolean;
 
   constructor(private spellService: SpellService) {
+    this.filterResources = {
+      'classes': ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'],
+      'componentTypes': ['verbal', 'somatic', 'material', 'gold'],
+      'shorthandComponents': {
+        'verbal': 'V',
+        'somatic': 'S',
+        'material': 'M',
+        'gold': 'GP'
+      }
+    };
     this.resetFilters();
   }
 
@@ -35,14 +50,13 @@ export class ListComponent {
       components: []
     };
 
-    let classes = ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'];
-    for (let i = 0; i < classes.length; i++) {
-      this[classes[i]] = false;
+
+    for (let i = 0; i < this.filterResources.classes.length; i++) {
+      this[this.filterResources.classes[i]] = false;
     }
 
-    let componentTypes = ['verbal', 'somatic', 'material', 'gold'];
-    for (let i = 0; i < componentTypes.length; i++) {
-      this[componentTypes[i]] = false;
+    for (let i = 0; i < this.filterResources.componentTypes.length; i++) {
+      this[this.filterResources.componentTypes[i]] = false;
     }
   }
 
@@ -58,25 +72,17 @@ export class ListComponent {
     this.filters.class = [];
     this.filters.components = [];
 
-    let classes = ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'];
-    for (let i = 0; i < classes.length; i++) {
-      if (this[classes[i]]) {
-        this.filters.class.push(classes[i]);
+    for (let i = 0; i < this.filterResources.classes.length; i++) {
+      if (this[this.filterResources.classes[i]]) {
+        this.filters.class.push(this.filterResources.classes[i]);
       }
     }
 
-    let shorthandComponents = {
-      'verbal': 'V',
-      'somatic': 'S',
-      'material': 'M',
-      'gold': 'GP'
-    };
-    let componentTypes = ['verbal', 'somatic', 'material', 'gold'];
     let empty = true;
-    for (let i = 0; i < componentTypes.length; i++) {
-      if (this[componentTypes[i]]) {
+    for (let i = 0; i < this.filterResources.componentTypes.length; i++) {
+      if (this[this.filterResources.componentTypes[i]]) {
         empty = false;
-        this.filters.components.push(shorthandComponents[componentTypes[i]]);
+        this.filters.components.push(this.filterResources.shorthandComponents[this.filterResources.componentTypes[i]]);
       }
     }
 
