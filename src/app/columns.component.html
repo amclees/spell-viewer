@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-6">
+    <spell-list #list [column]="true"></spell-list>
+  </div>
+  <div class="col-md-6">
+    <div class="affix spell-view">
+      <spell-view [spell]="list.selected"></spell-view>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,10 @@
 <div *ngIf="spell">
-  <h2>{{spell.name}}</h2>
+  <h2>{{spell.name}}
+    <small>
+      <a *ngIf="standalone" routerLink="/" class="btn btn-primary">Back to List</a>
+      <button *ngIf="!standalone" (click)="viewIndividual(spell)" class="btn btn-primary">View in Seperate Page</button>
+    </small>
+  </h2>
   <br />
   <p><em>{{formatLevel(spell)}} - {{spell.classes.join(', ')}} spell</em></p>
   <table class="table">

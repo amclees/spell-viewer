@@ -25,10 +25,11 @@ export class SpellService {
               spellObject.level,
               spellObject.range,
               spellObject.school,
-              spellObject['class']
+              spellObject['class'],
+              this.getSpellUrlName(spellNames[i])
             ));
           } catch (eror) {
-            console.log('Error converting to spell:')
+            console.log('Error converting to spell:');
             console.log(spellObject);
           }
         }
@@ -43,6 +44,15 @@ export class SpellService {
 
   getSpells(): Spell[] {
     return this.spells;
+  }
+
+  getSpell(urlName: string): Spell {
+    for (let i = 0; i < this.spells.length; i++) {
+      if (urlName === this.spells[i].urlName) {
+        return this.spells[i];
+      }
+    }
+    return null;
   }
 
   private getComponents(componentString: string): string[] {
@@ -63,5 +73,9 @@ export class SpellService {
     }
 
     return components;
+  }
+
+  private getSpellUrlName(spellName: string): string {
+    return spellName.trim().toLowerCase().replace(/[“”‘’]/, '').split(' ').join('-');
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Spell } from './spell';
 import { SpellService } from './spell.service';
@@ -24,8 +25,12 @@ export class ListComponent {
   };
   comparator: string;
   reverse: boolean;
+  column: boolean;
 
-  constructor(private spellService: SpellService) {
+  constructor(
+    private spellService: SpellService,
+    private router: Router
+  ) {
     this.filterResources = {
       'classes': ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'],
       'componentTypes': ['verbal', 'somatic', 'material', 'gold'],
@@ -37,6 +42,10 @@ export class ListComponent {
       }
     };
     this.resetFilters();
+  }
+
+  viewIndividual(spell: Spell): void {
+    this.router.navigate(['/spell', spell.urlName]);
   }
 
   resetFilters(): void {
@@ -124,6 +133,14 @@ export class ListComponent {
       baseComponents.push('GP');
     }
     return baseComponents.join(', ');
+  }
+
+  handleClick(spell: Spell): void {
+    if (this.column) {
+      this.selected = spell;
+    } else {
+      this.viewIndividual(spell);
+    }
   }
 
   private composeFilters(filters): (spell: Spell) => boolean {

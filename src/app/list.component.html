@@ -1,3 +1,4 @@
+<h2>D&amp;D 5e Spells <small><a href="./#help" id="title" class="btn btn-primary">Help</a></small></h2>
 <div>
   <br />
   <input [(ngModel)]="filters.name" placeholder="Search" class="form-control" />
@@ -65,7 +66,7 @@
       <th>Classes</th>
       <th>Components</th>
     </tr>
-    <tr *ngFor="let spell of getSpellsForDisplay()" (click)="selected = spell">
+    <tr *ngFor="let spell of getSpellsForDisplay()" (click)="handleClick(spell)">
       <td>{{spell.name}}</td>
       <td>{{spell.level}}</td>
       <td>{{spell.school}}</td>
@@ -73,4 +74,13 @@
       <td>{{displayComponents(spell.components)}}</td>
     </tr>
   </table>
+</div>
+<hr />
+<div id="help">
+  <h2>How to Use <small><a href="./#title" class="btn btn-primary">Back to Top</a></small></h2>
+  <ul>
+    <li>Type in the search box to find a specific spell</li>
+    <li>Click the top of a column to sort by that column</li>
+    <li>Click on a spell to view details about it</li>
+  </ul>
 </div>
