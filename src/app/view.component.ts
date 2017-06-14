@@ -13,7 +13,7 @@ import { SpellService } from './spell.service';
 })
 export class ViewComponent {
   @Input() spell: Spell;
-  standalone: boolean;
+  standalone = false;
 
   constructor(
     private spellService: SpellService,
@@ -24,7 +24,9 @@ export class ViewComponent {
   ngOnInit() {
     if (!this.spell) {
       this.spell = this.spellService.getSpell(this.route.snapshot.params['name']);
-      this.standalone = true;
+      if (this.spell) {
+        this.standalone = true;
+      }
     } else {
       this.standalone = false;
     }

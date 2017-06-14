@@ -9,18 +9,21 @@ import { SpellService } from './spell.service';
 import { AppComponent } from './app.component';
 import { ListComponent } from './list.component';
 import { ViewComponent } from './view.component';
+import { ViewSelectorComponent } from './view-selector.component';
+import { ColumnsComponent } from './columns.component';
 
 const routes: Routes = [
-  { path: '', component: ListComponent },
-  { path: 'spell/:name', component: ViewComponent },
-  { path: '**', component: ListComponent }
+  { path: '', component: ViewSelectorComponent },
+  { path: 'spell/:name', component: ViewComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
-    ViewComponent
+    ViewComponent,
+    ViewSelectorComponent,
+    ColumnsComponent
   ],
   imports: [
     BrowserModule,

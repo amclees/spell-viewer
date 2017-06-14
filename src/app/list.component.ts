@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Spell } from './spell';
@@ -25,7 +25,7 @@ export class ListComponent {
   };
   comparator: string;
   reverse: boolean;
-  column: boolean;
+  @Input() column: boolean;
 
   constructor(
     private spellService: SpellService,
