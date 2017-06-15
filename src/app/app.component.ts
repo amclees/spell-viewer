@@ -7,9 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  path: string;
+
   constructor(private router: Router) {
+    this.path = '';
     this.router.events.subscribe((path) => {
+      if (this.path === path['url'] || path['url'].includes('#')) {
+        return;
+      }
       window.scrollTo(0, 0);
+      this.path = path['url'];
     });
   }
 }
