@@ -71,6 +71,7 @@ reader.on('line', function(line) {
         break;
       case 5:
         currentWord.duration = readTagged(line, 'Duration', currentLineNumber);
+        currentWord.concentration = currentWord.duration.toLowerCase().includes('concentration');
         state++;
         break;
       case 6:
