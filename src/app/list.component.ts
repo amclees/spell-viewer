@@ -175,7 +175,7 @@ export class ListComponent {
     };
   }
 
-  private getArrayFilter(property, values): (spell: Spell) => boolean {
+  private getArrayFilter(property, values, needsAll = true): (spell: Spell) => boolean {
     if (!values || values.length === 0) {
       return (spell: Spell) => { return true; };
     }
@@ -186,7 +186,14 @@ export class ListComponent {
         }, false);
       };
     });
-    return (spell: Spell) => {
+    return needsAll ?
+    (spell: Spell) => {
+      return individualFilters.reduce((valid, filter) => {
+        return valid && filter(spell[property]);
+      }, true);
+    }
+    :
+    (spell: Spell) => {
       return individualFilters.reduce((valid, filter) => {
         return valid || filter(spell[property]);
       }, false);
