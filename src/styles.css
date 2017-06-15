@@ -20,3 +20,7 @@ body {
 .footer {
   font-size: 14px;
 }
+.checkmark {
+  color: #00DD00;
+  text-align: center;
+}

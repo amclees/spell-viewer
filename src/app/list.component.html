@@ -54,17 +54,36 @@
       <td><input [(ngModel)]="gold" (input)="scrollForEvent()" type="checkbox" /></td>
     </tr>
   </table>
+  <table class="table">
+    <tr>
+      <th></th>
+      <th>Ritual</th>
+      <th>Concentration<th>
+    </tr>
+    <tr>
+      <td>Show Only</td>
+      <td><input [(ngModel)]="showRitual" [disabled]="hideRitual" (input)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="showConcentration" [disabled]="hideConcentration" (input)="scrollForEvent()" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>Don't Show</td>
+      <td><input [(ngModel)]="hideRitual" [disabled]="showRitual" (input)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="hideConcentration" [disabled]="showConcentration" (input)="scrollForEvent()" type="checkbox" /></td>
+    </tr>
+  </table>
   <button (click)="resetFilters()" class="btn btn-info">Reset Filters</button>
 </div>
 <br />
 <div>
-  <table class="table table-hover">
+  <table class="table table-bordered table-hover">
     <tr>
       <th (click)="pushComparator('name')">Name</th>
       <th (click)="pushComparator('level')">Level</th>
       <th (click)="pushComparator('school')">School</th>
       <th>Classes</th>
-      <th>Components</th>
+      <th title="Components">Comp.</th>
+      <th title="Ritual">Rit.</th>
+      <th title="Concentration">Con.</th>
     </tr>
     <tr *ngFor="let spell of getSpellsForDisplay()" (click)="handleClick(spell)">
       <td>{{spell.name}}</td>
@@ -72,6 +91,8 @@
       <td>{{spell.school}}</td>
       <td>{{spell.classes.join(', ')}}</td>
       <td>{{displayComponents(spell.components)}}</td>
+      <td><i *ngIf="spell.ritual" class="material-icons checkmark">check_circle</i></td>
+      <td><i *ngIf="spell.concentration" class="material-icons checkmark">check_circle</i></td>
     </tr>
   </table>
 </div>

@@ -60,6 +60,10 @@ export class ListComponent {
       class: [],
       components: []
     };
+    this['showRitual'] = false;
+    this['hideRitual'] = false;
+    this['showConcentration'] = false;
+    this['hideConcentration'] = false;
 
 
     for (let i = 0; i < this.filterResources.classes.length; i++) {
@@ -111,7 +115,9 @@ export class ListComponent {
       this.getStringFilter('name', this.filters.name),
       this.getStringFilter('school', this.filters.school),
       this.getArrayFilter('classes', this.filters.class),
-      componentFilter
+      componentFilter,
+      this.getIncludeExcludeFilter('ritual', this['showRitual'], this['hideRitual']),
+      this.getIncludeExcludeFilter('concentration', this['showConcentration'], this['hideConcentration'])
     ]));
   }
 
@@ -173,6 +179,22 @@ export class ListComponent {
       }
       return spell[property].toLowerCase().includes(value.toLowerCase());
     };
+  }
+
+  private getIncludeExcludeFilter(property: string, include: boolean, exclude: boolean): (spell: Spell) => boolean {
+    if (include) {
+      return (spell: Spell) => {
+        return spell[property];
+      };
+    } else if (exclude) {
+      return (spell: Spell) => {
+        return !spell[property];
+      };
+    } else {
+      return (spell: Spell) => {
+        return true;
+      };
+    }
   }
 
   private getArrayFilter(property, values, needsAll = true): (spell: Spell) => boolean {
