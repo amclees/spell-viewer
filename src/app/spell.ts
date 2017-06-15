@@ -12,7 +12,7 @@ export class Spell {
     public urlName: string
   ) {
     if (level < 0 || level > 9) {
-      throw new Error("Invalid Spell: Level out of range");
+      throw new Error('Invalid Spell: Level out of range');
     }
   }
 }

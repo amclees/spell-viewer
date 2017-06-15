@@ -2,10 +2,10 @@
 body {
   font-family: Lato;
 }
-.spell-view {
+#spell-view {
   padding: 25px;
   overflow-y: auto;
-  height: 80%;
+  position: fixed;
 }
 .whitespace {
   white-space: pre-wrap;
