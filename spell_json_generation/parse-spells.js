@@ -42,7 +42,7 @@ reader.on('line', function(line) {
         state++;
         break;
       case 1:
-        // TODO: Ritual support
+        currentWord.ritual = false;
         if (line.indexOf('cantrip') !== -1) {
           currentWord.level = 0;
           currentWord.school = line.split(' ')[0];
@@ -54,6 +54,7 @@ reader.on('line', function(line) {
           currentWord.level = line[0];
           var rawSchool = line.split(' ')[1];
           currentWord.school = rawSchool[0].toUpperCase() + rawSchool.slice(1);
+          currentWord.ritual = line.toLowerCase().includes('ritual');
         }
         state++;
         break;
