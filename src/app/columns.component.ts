@@ -27,7 +27,6 @@ export class ColumnsComponent {
       this.spellView = document.getElementById('spell-view');
     }
     const maxScroll = 1 + Math.abs(document.body.scrollHeight - window.innerHeight);
-    console.log(maxScroll + ', ' + pageY);
     if (((pageY + 50) / maxScroll) > 0.9) {
       this.spellView.style.height = '50%';
     } else {
