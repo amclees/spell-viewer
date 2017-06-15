@@ -1,7 +1,7 @@
 <h2>D&amp;D 5e Spells <small><a href="./#help" id="title" class="btn btn-primary">Help</a></small></h2>
 <div>
   <br />
-  <input [(ngModel)]="filters.name" placeholder="Search" class="form-control" />
+  <input [(ngModel)]="filters.name" (input)="scrollForEvent()" placeholder="Search" class="form-control" />
   <br />
   <div class="form-group">
     <label for="schoolInput">School</label>

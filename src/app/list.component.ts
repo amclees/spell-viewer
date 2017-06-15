@@ -25,6 +25,7 @@ export class ListComponent {
   };
   comparator: string;
   reverse: boolean;
+  overflowTrigger: boolean;
   @Input() column: boolean;
 
   constructor(
@@ -41,6 +42,7 @@ export class ListComponent {
         'gold': 'GP'
       }
     };
+    this.overflowTrigger = false;
     this.resetFilters();
   }
 
@@ -141,6 +143,10 @@ export class ListComponent {
     } else {
       this.viewIndividual(spell);
     }
+  }
+
+  scrollForEvent(): void {
+    this.overflowTrigger = true;
   }
 
   private composeFilters(filters): (spell: Spell) => boolean {
