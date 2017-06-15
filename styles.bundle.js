@@ -1,21 +1,48 @@
 webpackJsonp([2,4],{
 
-/***/ 152:
+/***/ 143:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(50)(false);
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(304);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(340)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js??ref--9-1!../node_modules/postcss-loader/index.js??postcss!./styles.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js??ref--9-1!../node_modules/postcss-loader/index.js??postcss!./styles.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 304:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(78)(false);
 // imports
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\nbody {\r\n  font-family: Lato;\r\n}\r\n.spell-view {\r\n  padding: 25px;\r\n  overflow-y: auto;\r\n  height: 80%;\r\n}\r\n.whitespace {\r\n  white-space: pre-wrap;\r\n  padding: 10px;\r\n}\r\n.main-container {\r\n  margin-left: 10%;\r\n  margin-right: 10%;\r\n  margin-top: 2%;\r\n  margin-bottom: 5%;\r\n}\r\n.footer {\r\n  font-size: 14px;\r\n}\r\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\nbody {\r\n  font-family: Lato;\r\n}\r\n#spell-view {\r\n  padding: 25px;\r\n  overflow-y: auto;\r\n  position: fixed;\r\n}\r\n.whitespace {\r\n  white-space: pre-wrap;\r\n  padding: 10px;\r\n}\r\n.main-container {\r\n  margin-left: 10%;\r\n  margin-right: 10%;\r\n  margin-top: 2%;\r\n  margin-bottom: 5%;\r\n}\r\n.footer {\r\n  font-size: 14px;\r\n}\r\n.checkmark {\r\n  color: #00DD00;\r\n  text-align: center;\r\n}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 188:
+/***/ 340:
 /***/ (function(module, exports) {
 
 /*
@@ -268,15 +295,15 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 192:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(89);
+module.exports = __webpack_require__(143);
 
 
 /***/ }),
 
-/***/ 50:
+/***/ 78:
 /***/ (function(module, exports) {
 
 /*
@@ -357,34 +384,7 @@ function toComment(sourceMap) {
 }
 
 
-/***/ }),
-
-/***/ 89:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(152);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(188)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js??ref--9-1!../node_modules/postcss-loader/index.js??postcss!./styles.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js??ref--9-1!../node_modules/postcss-loader/index.js??postcss!./styles.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
 /***/ })
 
-},[192]);
+},[344]);
 //# sourceMappingURL=styles.bundle.js.map
