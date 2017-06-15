@@ -26,7 +26,9 @@ export class SpellService {
               spellObject.range,
               spellObject.school,
               spellObject['class'],
-              this.getSpellUrlName(spellNames[i])
+              this.getSpellUrlName(spellNames[i]),
+              spellObject.ritual,
+              spellObject.concentration
             ));
           } catch (eror) {
             console.log('Error converting to spell:');
