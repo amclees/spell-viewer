@@ -69,6 +69,7 @@ export class ListComponent {
     for (let i = 0; i < this.filterResources.componentTypes.length; i++) {
       this[this.filterResources.componentTypes[i]] = false;
     }
+    this.scrollForEvent();
   }
 
   sort(): void {
