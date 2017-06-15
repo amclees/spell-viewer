@@ -36,9 +36,11 @@ export class ViewComponent {
     if (spell.level === undefined || spell.school === undefined) {
       console.log('Undefined level or school in:');
       console.log(spell);
+      return 'Unknown level and school';
     }
+    const ritualText = spell.ritual ? ' (ritual)' : '';
     if (spell.level === 0) {
-      return `${spell.school} cantrip`;
+      return `${spell.school} cantrip` + ritualText;
     }
     let suffix = 'th';
     switch (spell.level % 10) {
@@ -52,7 +54,7 @@ export class ViewComponent {
         suffix = 'rd';
         break;
     }
-    return `${spell.level}${suffix}-level ${spell.school.toLowerCase()}`;
+    return `${spell.level}${suffix}-level ${spell.school.toLowerCase()}` + ritualText;
   }
 
   viewIndividual(spell: Spell): void {
