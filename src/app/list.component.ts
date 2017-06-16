@@ -102,10 +102,10 @@ export class ListComponent {
       }
     }
 
-    let baseComponentFilter = this.getArrayFilter('components', this.filters.components.filter(element => {
+    const baseComponentFilter = this.getArrayFilter('components', this.filters.components.filter(element => {
       return element === 'V' || element === 'S' || element === 'M';
     }));
-    let componentFilter = spell => {
+    const componentFilter = spell => {
       return empty || (baseComponentFilter(spell) && (this['verbal'] || this['somatic'] || this['material'])) || (this['gold'] && spell.components.reduce((acc, component) => {
         return acc || component.toLowerCase().indexOf('gp') !== -1;
       }, false));
@@ -132,7 +132,7 @@ export class ListComponent {
 
   displayComponents(components: string[]): string {
     let gp = false;
-    let baseComponents = components.filter(element => {
+    const baseComponents = components.filter(element => {
       if (element.toLowerCase().indexOf('gp') !== -1) {
         gp = true;
       }
@@ -160,7 +160,7 @@ export class ListComponent {
     return (spell: Spell) => {
       let pass = true;
 
-      for (let filter of filters) {
+      for (const filter of filters) {
         pass = pass && filter(spell);
       }
 
@@ -201,7 +201,7 @@ export class ListComponent {
     if (!values || values.length === 0) {
       return (spell: Spell) => { return true; };
     }
-    let individualFilters = values.map((value) => {
+    const individualFilters = values.map((value) => {
       return (array) => {
         return array.reduce((acc, string) => {
           return acc || string.toLowerCase().includes(value.toLowerCase());

@@ -10,11 +10,11 @@ export class SpellService {
 
   constructor(private http: Http) {
     this.spells = [];
-    let subscription = this.http.get('/spells.json').map(response => response.json()).subscribe(
+    const subscription = this.http.get('/spells.json').map(response => response.json()).subscribe(
       spells => {
-        let spellNames = Object.keys(spells).sort();
+        const spellNames = Object.keys(spells).sort();
         for (let i = 0; i < spellNames.length; i++) {
-          let spellObject = spells[spellNames[i]];
+          const spellObject = spells[spellNames[i]];
           try {
             this.spells.push(new Spell(
               spellNames[i],
@@ -58,19 +58,19 @@ export class SpellService {
   }
 
   private getComponents(componentString: string): string[] {
-    let components = [];
+    const components = [];
 
-    let baseComponents = ['V', 'S', 'M'];
-    for (let component of baseComponents) {
+    const baseComponents = ['V', 'S', 'M'];
+    for (const component of baseComponents) {
       if (componentString.includes(component)) {
         components.push(component);
       }
     }
 
-    let materialStart = componentString.indexOf('(');
-    let materialEnd = componentString.indexOf(')');
-    if (materialStart != -1 && materialEnd > materialStart) {
-      let material = componentString.substring(materialStart + 1, materialEnd);
+    const materialStart = componentString.indexOf('(');
+    const materialEnd = componentString.indexOf(')');
+    if (materialStart !== -1 && materialEnd > materialStart) {
+      const material = componentString.substring(materialStart + 1, materialEnd);
       components.push(material[0].toUpperCase() + material.slice(1));
     }
 
