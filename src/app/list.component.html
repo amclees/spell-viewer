@@ -91,8 +91,8 @@
       <td>{{spell.school}}</td>
       <td>{{spell.classes.join(', ')}}</td>
       <td>{{displayComponents(spell.components)}}</td>
-      <td><i *ngIf="spell.ritual" class="material-icons checkmark">check_circle</i></td>
-      <td><i *ngIf="spell.concentration" class="material-icons checkmark">check_circle</i></td>
+      <td align="center"><span *ngIf="spell.ritual" class="checkmark">✓</span></td>
+      <td align="center"><span *ngIf="spell.concentration" class="checkmark">✓</span></td>
     </tr>
   </table>
 </div>
