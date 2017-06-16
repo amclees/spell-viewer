@@ -9,12 +9,16 @@ export class ColumnsComponent {
 
   @ViewChild('list') list;
   ngAfterViewInit(): void {
-    setInterval(() => {
+    const formListener = () => {
       if (this.list.overflowTrigger) {
-        this.list.overflowTrigger = false;
-        this.handleScroll(document.body.scrollTop);
+        setTimeout(() => {
+          this.list.overflowTrigger = false;
+          this.handleScroll(window.pageYOffset);
+        }, 25);
       }
-    }, 30);
+      setTimeout(formListener, 50);
+    };
+    formListener();
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -27,10 +31,10 @@ export class ColumnsComponent {
       this.spellView = document.getElementById('spell-view');
     }
     const maxScroll = 1 + Math.abs(document.body.scrollHeight - window.innerHeight);
-    if (((pageY + 50) / maxScroll) > 0.9) {
+    if (((pageY + 60) / maxScroll) > 0.89) {
       this.spellView.style.height = '50%';
     } else {
-      this.spellView.style.height = '90%';
+      this.spellView.style.height = '87%';
     }
   }
 }

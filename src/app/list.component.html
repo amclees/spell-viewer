@@ -30,14 +30,14 @@
       <th>Wizard</th>
     </tr>
     <tr>
-      <td><input [(ngModel)]="bard" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="cleric" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="druid" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="paladin" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="ranger" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="sorcerer" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="warlock" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="wizard" (input)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="bard" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="cleric" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="druid" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="paladin" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="ranger" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="sorcerer" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="warlock" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="wizard" (click)="scrollForEvent()" type="checkbox" /></td>
     </tr>
   </table>
   <table class="table">
@@ -48,10 +48,10 @@
       <th>GP</th>
     </tr>
     <tr>
-      <td><input [(ngModel)]="verbal" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="somatic" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="material" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="gold" (input)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="verbal" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="somatic" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="material" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="gold" (click)="scrollForEvent()" type="checkbox" /></td>
     </tr>
   </table>
   <table class="table">
@@ -62,13 +62,13 @@
     </tr>
     <tr>
       <td>Show Only</td>
-      <td><input [(ngModel)]="showRitual" [disabled]="hideRitual" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="showConcentration" [disabled]="hideConcentration" (input)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="showRitual" [disabled]="hideRitual" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="showConcentration" [disabled]="hideConcentration" (click)="scrollForEvent()" type="checkbox" /></td>
     </tr>
     <tr>
       <td>Don't Show</td>
-      <td><input [(ngModel)]="hideRitual" [disabled]="showRitual" (input)="scrollForEvent()" type="checkbox" /></td>
-      <td><input [(ngModel)]="hideConcentration" [disabled]="showConcentration" (input)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="hideRitual" [disabled]="showRitual" (click)="scrollForEvent()" type="checkbox" /></td>
+      <td><input [(ngModel)]="hideConcentration" [disabled]="showConcentration" (click)="scrollForEvent()" type="checkbox" /></td>
     </tr>
   </table>
   <button (click)="resetFilters()" class="btn btn-info">Reset Filters</button>
