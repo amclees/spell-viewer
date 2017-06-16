@@ -20,3 +20,4 @@ Thumbs.db
 
 /spell_json_generation/*.json
 /spell_json_generation/*.txt
+/src/spells.json
