@@ -1,4 +1,6 @@
 export class Spell {
+  public parentList: Spell[];
+
   constructor(
     public name: string,
     public castingTime: string,

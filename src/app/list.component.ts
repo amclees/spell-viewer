@@ -52,6 +52,7 @@ export class ListComponent {
   }
 
   resetFilters(): void {
+    console.log('reset filters');
     this.spells = this.spellService.getSpells();
     this.comparator = 'name';
     this.reverse = false;
@@ -78,10 +79,18 @@ export class ListComponent {
   }
 
   sort(): void {
+    if (this.spells.length === 0) {
+      return;
+    }
     // This check helps performance and helps deal with Chrome's unstable sort.
     if (this.comparator !== this.oldComparator) {
       this.spells.sort(this.getComparator(this.comparator));
       this.oldComparator = this.comparator;
+
+      const newParentList = this.spells.slice();
+      for (let i = 0; i < this.spells.length; i++) {
+        this.spells[i].parentList = newParentList;
+      }
     }
     if (this.reverse) {
       this.spells.reverse();
@@ -236,7 +245,12 @@ export class ListComponent {
         return 0;
       }
       if (spell1[property] === spell2[property]) {
-        return 0;
+        if (spell1.parentList !== undefined && spell2.parentList !== undefined) {
+          return spell1.parentList.indexOf(spell1) - spell2.parentList.indexOf(spell2);
+        } else {
+          console.log('Parent list not set on spell, returning comparison 0.');
+          return 0;
+        }
       }
       return (spell1[property] < spell2[property]) ? -1 : 1;
     };
