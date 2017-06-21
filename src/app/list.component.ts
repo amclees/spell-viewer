@@ -24,6 +24,7 @@ export class ListComponent {
     shorthandComponents: object;
   };
   comparator: string;
+  oldComparator: string;
   reverse: boolean;
   overflowTrigger: boolean;
   @Input() column: boolean;
@@ -77,7 +78,11 @@ export class ListComponent {
   }
 
   sort(): void {
-    this.spells.sort(this.getComparator(this.comparator));
+    // This check helps performance and helps deal with Chrome's unstable sort.
+    if (this.comparator !== this.oldComparator) {
+      this.spells.sort(this.getComparator(this.comparator));
+      this.oldComparator = this.comparator;
+    }
     if (this.reverse) {
       this.spells.reverse();
     }
