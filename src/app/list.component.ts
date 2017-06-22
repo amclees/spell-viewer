@@ -52,7 +52,6 @@ export class ListComponent {
   }
 
   resetFilters(): void {
-    console.log('reset filters');
     this.spells = this.spellService.getSpells();
     this.comparator = 'name';
     this.reverse = false;
