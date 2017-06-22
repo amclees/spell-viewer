@@ -169,12 +169,16 @@ var ColumnsComponent = (function () {
     }
     ColumnsComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        setInterval(function () {
+        var formListener = function () {
             if (_this.list.overflowTrigger) {
-                _this.list.overflowTrigger = false;
-                _this.handleScroll(document.body.scrollTop);
+                setTimeout(function () {
+                    _this.list.overflowTrigger = false;
+                    _this.handleScroll(window.pageYOffset);
+                }, 25);
             }
-        }, 30);
+            setTimeout(formListener, 50);
+        };
+        formListener();
     };
     ColumnsComponent.prototype.onScrollEvent = function ($event) {
         this.handleScroll($event.pageY);
@@ -184,11 +188,11 @@ var ColumnsComponent = (function () {
             this.spellView = document.getElementById('spell-view');
         }
         var maxScroll = 1 + Math.abs(document.body.scrollHeight - window.innerHeight);
-        if (((pageY + 50) / maxScroll) > 0.9) {
+        if (((pageY + 60) / maxScroll) > 0.89) {
             this.spellView.style.height = '50%';
         }
         else {
-            this.spellView.style.height = '90%';
+            this.spellView.style.height = '87%';
         }
     };
     return ColumnsComponent;
@@ -255,6 +259,7 @@ var ListComponent = (function () {
         this.router.navigate(['/spell', spell.urlName]);
     };
     ListComponent.prototype.resetFilters = function () {
+        console.log('reset filters');
         this.spells = this.spellService.getSpells();
         this.comparator = 'name';
         this.reverse = false;
@@ -277,7 +282,18 @@ var ListComponent = (function () {
         this.scrollForEvent();
     };
     ListComponent.prototype.sort = function () {
-        this.spells.sort(this.getComparator(this.comparator));
+        if (this.spells.length === 0) {
+            return;
+        }
+        // This check helps performance and helps deal with Chrome's unstable sort.
+        if (this.comparator !== this.oldComparator) {
+            this.spells.sort(this.getComparator(this.comparator));
+            this.oldComparator = this.comparator;
+            var newParentList = this.spells.slice();
+            for (var i = 0; i < this.spells.length; i++) {
+                this.spells[i].parentList = newParentList;
+            }
+        }
         if (this.reverse) {
             this.spells.reverse();
         }
@@ -422,7 +438,13 @@ var ListComponent = (function () {
                 return 0;
             }
             if (spell1[property] === spell2[property]) {
-                return 0;
+                if (spell1.parentList !== undefined && spell2.parentList !== undefined) {
+                    return spell1.parentList.indexOf(spell1) - spell2.parentList.indexOf(spell2);
+                }
+                else {
+                    console.log('Parent list not set on spell, returning comparison 0.');
+                    return 0;
+                }
             }
             return (spell1[property] < spell2[property]) ? -1 : 1;
         };
@@ -611,7 +633,7 @@ module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <spel
 /***/ 307:
 /***/ (function(module, exports) {
 
-module.exports = "<h2>D&amp;D 5e Spells <small><a href=\"https://amclees.github.io/spell-viewer/#help\" id=\"title\" class=\"btn btn-primary\">Help</a></small></h2>\r\n<div>\r\n  <br />\r\n  <input [(ngModel)]=\"filters.name\" (input)=\"scrollForEvent()\" placeholder=\"Search\" class=\"form-control\" />\r\n  <br />\r\n  <div class=\"form-group\">\r\n    <label for=\"schoolInput\">School</label>\r\n    <select [(ngModel)]=\"filters.school\" (input)=\"scrollForEvent()\" id=\"schoolInput\" class=\"form-control\">\r\n      <option label=\" \"></option>\r\n      <option>Abjuration</option>\r\n      <option>Conjuration</option>\r\n      <option>Divination</option>\r\n      <option>Enchantment</option>\r\n      <option>Evocation</option>\r\n      <option>Illusion</option>\r\n      <option>Necromancy</option>\r\n      <option>Transmutation</option>\r\n    </select>\r\n  </div>\r\n  <br />\r\n  <table class=\"table\">\r\n    <tr>\r\n      <th>Bard</th>\r\n      <th>Cleric</th>\r\n      <th>Druid</th>\r\n      <th>Paladin</th>\r\n      <th>Ranger</th>\r\n      <th>Sorcerer</th>\r\n      <th>Warlock</th>\r\n      <th>Wizard</th>\r\n    </tr>\r\n    <tr>\r\n      <td><input [(ngModel)]=\"bard\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"cleric\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"druid\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"paladin\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"ranger\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"sorcerer\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"warlock\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"wizard\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n  </table>\r\n  <table class=\"table\">\r\n    <tr>\r\n      <th>V</th>\r\n      <th>S</th>\r\n      <th>M</th>\r\n      <th>GP</th>\r\n    </tr>\r\n    <tr>\r\n      <td><input [(ngModel)]=\"verbal\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"somatic\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"material\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"gold\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n  </table>\r\n  <table class=\"table\">\r\n    <tr>\r\n      <th></th>\r\n      <th>Ritual</th>\r\n      <th>Concentration<th>\r\n    </tr>\r\n    <tr>\r\n      <td>Show Only</td>\r\n      <td><input [(ngModel)]=\"showRitual\" [disabled]=\"hideRitual\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"showConcentration\" [disabled]=\"hideConcentration\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Don't Show</td>\r\n      <td><input [(ngModel)]=\"hideRitual\" [disabled]=\"showRitual\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"hideConcentration\" [disabled]=\"showConcentration\" (input)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n  </table>\r\n  <button (click)=\"resetFilters()\" class=\"btn btn-info\">Reset Filters</button>\r\n</div>\r\n<br />\r\n<div>\r\n  <table class=\"table table-bordered table-hover\">\r\n    <tr>\r\n      <th (click)=\"pushComparator('name')\">Name</th>\r\n      <th (click)=\"pushComparator('level')\">Level</th>\r\n      <th (click)=\"pushComparator('school')\">School</th>\r\n      <th>Classes</th>\r\n      <th title=\"Components\">Comp.</th>\r\n      <th title=\"Ritual\">Rit.</th>\r\n      <th title=\"Concentration\">Con.</th>\r\n    </tr>\r\n    <tr *ngFor=\"let spell of getSpellsForDisplay()\" (click)=\"handleClick(spell)\">\r\n      <td>{{spell.name}}</td>\r\n      <td>{{spell.level}}</td>\r\n      <td>{{spell.school}}</td>\r\n      <td>{{spell.classes.join(', ')}}</td>\r\n      <td>{{displayComponents(spell.components)}}</td>\r\n      <td><i *ngIf=\"spell.ritual\" class=\"material-icons checkmark\">check_circle</i></td>\r\n      <td><i *ngIf=\"spell.concentration\" class=\"material-icons checkmark\">check_circle</i></td>\r\n    </tr>\r\n  </table>\r\n</div>\r\n<hr />\r\n<div id=\"help\">\r\n  <h2>How to Use <small><a href=\"https://amclees.github.io/spell-viewer/#title\" class=\"btn btn-primary\">Back to Top</a></small></h2>\r\n  <ul>\r\n    <li>Type in the search box to find a specific spell</li>\r\n    <li>Click the top of a column to sort by that column</li>\r\n    <li>Click on a spell to view details about it</li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<h2>D&amp;D 5e Spells <small><a href=\"https://amclees.github.io/spell-viewer/#help\" id=\"title\" class=\"btn btn-primary\">Help</a></small></h2>\r\n<div>\r\n  <br />\r\n  <input [(ngModel)]=\"filters.name\" (input)=\"scrollForEvent()\" placeholder=\"Search\" class=\"form-control\" />\r\n  <br />\r\n  <div class=\"form-group\">\r\n    <label for=\"schoolInput\">School</label>\r\n    <select [(ngModel)]=\"filters.school\" (input)=\"scrollForEvent()\" id=\"schoolInput\" class=\"form-control\">\r\n      <option label=\" \"></option>\r\n      <option>Abjuration</option>\r\n      <option>Conjuration</option>\r\n      <option>Divination</option>\r\n      <option>Enchantment</option>\r\n      <option>Evocation</option>\r\n      <option>Illusion</option>\r\n      <option>Necromancy</option>\r\n      <option>Transmutation</option>\r\n    </select>\r\n  </div>\r\n  <br />\r\n  <table class=\"table\">\r\n    <tr>\r\n      <th>Bard</th>\r\n      <th>Cleric</th>\r\n      <th>Druid</th>\r\n      <th>Paladin</th>\r\n      <th>Ranger</th>\r\n      <th>Sorcerer</th>\r\n      <th>Warlock</th>\r\n      <th>Wizard</th>\r\n    </tr>\r\n    <tr>\r\n      <td><input [(ngModel)]=\"bard\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"cleric\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"druid\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"paladin\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"ranger\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"sorcerer\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"warlock\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"wizard\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n  </table>\r\n  <table class=\"table\">\r\n    <tr>\r\n      <th>V</th>\r\n      <th>S</th>\r\n      <th>M</th>\r\n      <th>GP</th>\r\n    </tr>\r\n    <tr>\r\n      <td><input [(ngModel)]=\"verbal\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"somatic\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"material\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"gold\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n  </table>\r\n  <table class=\"table\">\r\n    <tr>\r\n      <th></th>\r\n      <th>Ritual</th>\r\n      <th>Concentration<th>\r\n    </tr>\r\n    <tr>\r\n      <td>Show Only</td>\r\n      <td><input [(ngModel)]=\"showRitual\" [disabled]=\"hideRitual\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"showConcentration\" [disabled]=\"hideConcentration\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Don't Show</td>\r\n      <td><input [(ngModel)]=\"hideRitual\" [disabled]=\"showRitual\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n      <td><input [(ngModel)]=\"hideConcentration\" [disabled]=\"showConcentration\" (click)=\"scrollForEvent()\" type=\"checkbox\" /></td>\r\n    </tr>\r\n  </table>\r\n  <button (click)=\"resetFilters()\" class=\"btn btn-info\">Reset Filters</button>\r\n</div>\r\n<br />\r\n<div>\r\n  <table class=\"table table-bordered table-hover\">\r\n    <tr>\r\n      <th (click)=\"pushComparator('name')\">Name</th>\r\n      <th (click)=\"pushComparator('level')\">Level</th>\r\n      <th (click)=\"pushComparator('school')\">School</th>\r\n      <th>Classes</th>\r\n      <th title=\"Components\">Comp.</th>\r\n      <th title=\"Ritual\">Rit.</th>\r\n      <th title=\"Concentration\">Con.</th>\r\n    </tr>\r\n    <tr *ngFor=\"let spell of getSpellsForDisplay()\" (click)=\"handleClick(spell)\">\r\n      <td>{{spell.name}}</td>\r\n      <td>{{spell.level}}</td>\r\n      <td>{{spell.school}}</td>\r\n      <td>{{spell.classes.join(', ')}}</td>\r\n      <td>{{displayComponents(spell.components)}}</td>\r\n      <td align=\"center\"><span *ngIf=\"spell.ritual\" class=\"checkmark\">✓</span></td>\r\n      <td align=\"center\"><span *ngIf=\"spell.concentration\" class=\"checkmark\">✓</span></td>\r\n    </tr>\r\n  </table>\r\n</div>\r\n<hr />\r\n<div id=\"help\">\r\n  <h2>How to Use <small><a href=\"https://amclees.github.io/spell-viewer/#title\" class=\"btn btn-primary\">Back to Top</a></small></h2>\r\n  <ul>\r\n    <li>Type in the search box to find a specific spell</li>\r\n    <li>Click the top of a column to sort by that column</li>\r\n    <li>Click on a spell to view details about it</li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -697,7 +719,7 @@ var SpellService = (function () {
         }
         var materialStart = componentString.indexOf('(');
         var materialEnd = componentString.indexOf(')');
-        if (materialStart != -1 && materialEnd > materialStart) {
+        if (materialStart !== -1 && materialEnd > materialStart) {
             var material = componentString.substring(materialStart + 1, materialEnd);
             components.push(material[0].toUpperCase() + material.slice(1));
         }

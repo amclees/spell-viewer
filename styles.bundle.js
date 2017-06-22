@@ -35,7 +35,7 @@ exports = module.exports = __webpack_require__(78)(false);
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\nbody {\r\n  font-family: Lato;\r\n}\r\n#spell-view {\r\n  padding: 25px;\r\n  overflow-y: auto;\r\n  position: fixed;\r\n}\r\n.whitespace {\r\n  white-space: pre-wrap;\r\n  padding: 10px;\r\n}\r\n.main-container {\r\n  margin-left: 10%;\r\n  margin-right: 10%;\r\n  margin-top: 2%;\r\n  margin-bottom: 5%;\r\n}\r\n.footer {\r\n  font-size: 14px;\r\n}\r\n.checkmark {\r\n  color: #00DD00;\r\n  text-align: center;\r\n}\r\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\nbody {\r\n  font-family: Lato;\r\n}\r\n#spell-view {\r\n  padding: 25px;\r\n  overflow-y: auto;\r\n  position: fixed;\r\n}\r\n.whitespace {\r\n  white-space: pre-wrap;\r\n  padding: 10px;\r\n}\r\n.main-container {\r\n  margin-left: 10%;\r\n  margin-right: 10%;\r\n  margin-top: 2%;\r\n  margin-bottom: 5%;\r\n}\r\n.footer {\r\n  font-size: 14px;\r\n}\r\n.checkmark {\r\n  color: #00CC00;\r\n  font-size: 24px;\r\n}\r\n", ""]);
 
 // exports
 
