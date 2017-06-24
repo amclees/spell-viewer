@@ -31,10 +31,10 @@ export class ColumnsComponent {
       this.spellView = document.getElementById('spell-view');
     }
     const maxScroll = 1 + Math.abs(document.body.scrollHeight - window.innerHeight);
-    if (((pageY + 60) / maxScroll) > 0.89) {
+    if (((pageY + 60) / maxScroll) > 0.85) {
       this.spellView.style.height = '50%';
     } else {
-      this.spellView.style.height = '87%';
+      this.spellView.style.height = '85%';
     }
   }
 }
