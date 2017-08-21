@@ -1,4 +1,6 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, ViewChild } from '@angular/core';
+
+import { ListData } from './list-data';
 
 @Component({
   selector: 'column-view',
@@ -6,6 +8,12 @@ import { Component, HostListener, ViewChild } from '@angular/core';
 })
 export class ColumnsComponent {
   spellView: HTMLElement;
+  @Input() listData: ListData;
+
+  constructor() {
+    console.log('columns data:');
+    console.log(this.listData);
+  }
 
   @ViewChild('list') list;
   ngAfterViewInit(): void {

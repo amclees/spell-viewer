@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ListData } from './list-data';
 import { Spell } from './spell';
 import { SpellService } from './spell.service';
 
@@ -10,30 +11,16 @@ import { SpellService } from './spell.service';
   styleUrls: ['./app.component.css']
 })
 export class ListComponent {
-  spells: Spell[];
-  selected: Spell;
-  filters: {
-    name: string;
-    school: string;
-    class: string[];
-    components: string[];
-  };
-  filterResources: {
-    classes: string[];
-    componentTypes: string[];
-    shorthandComponents: object;
-  };
-  comparator: string;
-  oldComparator: string;
-  reverse: boolean;
-  overflowTrigger: boolean;
+  @Input() data: ListData;
   @Input() column: boolean;
 
   constructor(
     private spellService: SpellService,
     private router: Router
   ) {
-    this.filterResources = {
+    console.log('listComponent data:');
+    console.log(this.data);
+    this.data.filterResources = {
       'classes': ['bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'],
       'componentTypes': ['verbal', 'somatic', 'material', 'gold'],
       'shorthandComponents': {
@@ -43,7 +30,7 @@ export class ListComponent {
         'gold': 'GP'
       }
     };
-    this.overflowTrigger = false;
+    this.data.overflowTrigger = false;
     this.resetFilters();
   }
 
@@ -52,10 +39,10 @@ export class ListComponent {
   }
 
   resetFilters(): void {
-    this.spells = this.spellService.getSpells();
-    this.comparator = 'name';
-    this.reverse = false;
-    this.filters = {
+    this.data.spells = this.spellService.getSpells();
+    this.data.comparator = 'name';
+    this.data.reverse = false;
+    this.data.filters = {
       name: '',
       school: '',
       class: [],
@@ -67,55 +54,55 @@ export class ListComponent {
     this['hideConcentration'] = false;
 
 
-    for (let i = 0; i < this.filterResources.classes.length; i++) {
-      this[this.filterResources.classes[i]] = false;
+    for (let i = 0; i < this.data.filterResources.classes.length; i++) {
+      this.data[this.data.filterResources.classes[i]] = false;
     }
 
-    for (let i = 0; i < this.filterResources.componentTypes.length; i++) {
-      this[this.filterResources.componentTypes[i]] = false;
+    for (let i = 0; i < this.data.filterResources.componentTypes.length; i++) {
+      this.data[this.data.filterResources.componentTypes[i]] = false;
     }
     this.scrollForEvent();
   }
 
   sort(): void {
-    if (this.spells.length === 0) {
+    if (this.data.spells.length === 0) {
       return;
     }
     // This check helps performance and helps deal with Chrome's unstable sort.
-    if (this.comparator !== this.oldComparator) {
-      this.spells.sort(this.getComparator(this.comparator));
-      this.oldComparator = this.comparator;
+    if (this.data.comparator !== this.data.oldComparator) {
+      this.data.spells.sort(this.getComparator(this.data.comparator));
+      this.data.oldComparator = this.data.comparator;
 
-      const newParentList = this.spells.slice();
-      for (let i = 0; i < this.spells.length; i++) {
-        this.spells[i].parentList = newParentList;
+      const newParentList = this.data.spells.slice();
+      for (let i = 0; i < this.data.spells.length; i++) {
+        this.data.spells[i].parentList = newParentList;
       }
     }
-    if (this.reverse) {
-      this.spells.reverse();
+    if (this.data.reverse) {
+      this.data.spells.reverse();
     }
   }
 
   getSpellsForDisplay(): Spell[] {
     this.sort();
-    this.filters.class = [];
-    this.filters.components = [];
+    this.data.filters.class = [];
+    this.data.filters.components = [];
 
-    for (let i = 0; i < this.filterResources.classes.length; i++) {
-      if (this[this.filterResources.classes[i]]) {
-        this.filters.class.push(this.filterResources.classes[i]);
+    for (let i = 0; i < this.data.filterResources.classes.length; i++) {
+      if (this[this.data.filterResources.classes[i]]) {
+        this.data.filters.class.push(this.data.filterResources.classes[i]);
       }
     }
 
     let empty = true;
-    for (let i = 0; i < this.filterResources.componentTypes.length; i++) {
-      if (this[this.filterResources.componentTypes[i]]) {
+    for (let i = 0; i < this.data.filterResources.componentTypes.length; i++) {
+      if (this[this.data.filterResources.componentTypes[i]]) {
         empty = false;
-        this.filters.components.push(this.filterResources.shorthandComponents[this.filterResources.componentTypes[i]]);
+        this.data.filters.components.push(this.data.filterResources.shorthandComponents[this.data.filterResources.componentTypes[i]]);
       }
     }
 
-    const baseComponentFilter = this.getArrayFilter('components', this.filters.components.filter(element => {
+    const baseComponentFilter = this.getArrayFilter('components', this.data.filters.components.filter(element => {
       return element === 'V' || element === 'S' || element === 'M';
     }));
     const componentFilter = spell => {
@@ -124,10 +111,10 @@ export class ListComponent {
       }, false));
     };
 
-    return this.spells.filter(this.composeFilters([
-      this.getStringFilter('name', this.filters.name),
-      this.getStringFilter('school', this.filters.school),
-      this.getArrayFilter('classes', this.filters.class),
+    return this.data.spells.filter(this.composeFilters([
+      this.getStringFilter('name', this.data.filters.name),
+      this.getStringFilter('school', this.data.filters.school),
+      this.getArrayFilter('classes', this.data.filters.class),
       componentFilter,
       this.getIncludeExcludeFilter('ritual', this['showRitual'], this['hideRitual']),
       this.getIncludeExcludeFilter('concentration', this['showConcentration'], this['hideConcentration'])
@@ -135,11 +122,11 @@ export class ListComponent {
   }
 
   pushComparator(property: string): void {
-    if (this.comparator === property) {
-      this.reverse = !this.reverse;
+    if (this.data.comparator === property) {
+      this.data.reverse = !this.data.reverse;
     } else {
-      this.comparator = property;
-      this.reverse = false;
+      this.data.comparator = property;
+      this.data.reverse = false;
     }
   }
 
@@ -159,14 +146,14 @@ export class ListComponent {
 
   handleClick(spell: Spell): void {
     if (this.column) {
-      this.selected = spell;
+      this.data.selected = spell;
     } else {
       this.viewIndividual(spell);
     }
   }
 
   scrollForEvent(): void {
-    this.overflowTrigger = true;
+    this.data.overflowTrigger = true;
   }
 
   private composeFilters(filters): (spell: Spell) => boolean {
